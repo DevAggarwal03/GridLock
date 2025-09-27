@@ -1,7 +1,7 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 import cors from 'cors'
-import XRouter from "./twitterRouters";
+import XRouter from "./controllers/twitterRouters";
 
 configDotenv();
 const app = express();
