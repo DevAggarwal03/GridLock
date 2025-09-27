@@ -3,6 +3,7 @@ import { message, role, Rooms } from "./index";
 import { secretKey } from "./index";
 import { AES } from "crypto-js";
 import prisma from "@repo/db/dbClient";
+import { announceResult } from "./contractFn";
 
 const logWinnerDB = async (matchId: String, userId: String) => {
     try {
@@ -60,6 +61,7 @@ export const distributionHandler = async(info : message, wss : WebSocket) => {
         const encryptedMsg = AES.encrypt(sendMsg, secretKey).toString();
         if(parsedMsg.isComplete){
             const response = await logWinnerDB(challengeId, userId);
+            const annouceWinnerResponse = await announceResult(info.challengeId, 1);
         }
         room.spectators.forEach((ws) => ws.send(encryptedMsg));
         if(parsedMsg.isComplete){
@@ -81,6 +83,7 @@ export const distributionHandler = async(info : message, wss : WebSocket) => {
         const encryptedMsg = AES.encrypt(sendMsg, secretKey).toString();
         if(parsedMsg.isComplete){
             const response = await logWinnerDB(challengeId, userId);
+            const annouceWinnerResponse = await announceResult(info.challengeId, 1); 
         }
         room.spectators.forEach((ws) => ws.send(encryptedMsg));
 
